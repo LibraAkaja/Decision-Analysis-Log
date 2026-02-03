@@ -3,13 +3,15 @@ from jose import jwt
 from datetime import datetime, timedelta
 from app.core.config import SECRET_KEY, ALGORITHM
 
-pwd_context = CryptContext(schemas=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def hash_password(password: str):
+def hash_password(password: str) -> str:
+    password = password.encode("utf-8")[:72]
     return pwd_context.hash(password)
 
-def verify_password(password, hashed):
-    return pwd_context.verify(password, hashed)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    plain_password = plain_password.encode("utf-8")[:72]
+    return pwd_context.verify(plain_password, hashed_password)
 
 def create_access_token(data: dict, expires_delta: int):
     to_encode = data.copy()
