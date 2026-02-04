@@ -1,14 +1,13 @@
-from pydantic import BaseModel, Field
-from datetime import date
+from pydantic import BaseModel
+from typing import Optional
 from uuid import UUID
 
 class DecisionCreate(BaseModel):
     title: str
-    context: str
-    domain: str
-    confidence_level: int = Field(ge=1, le=5)
-    decision_date: date
-    status: str
+    description: Optional[str] = None
 
-class DecisionResponse(DecisionCreate):
+class DecisionOut(BaseModel):
     id: UUID
+    title: str
+    description: Optional[str]
+    is_active: bool

@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-from app.routers import auth, decisions
-from app.database import Base, engine
+from app.routers import decisions, options
 
-Base.metadata.create_all(bind=engine)
+app = FastAPI(title="Decision API")
 
-app = FastAPI(title="Decision Analysis LOG API")
+app.include_router(decisions.router)
+app.include_router(options.router)
 
-app.include_router(decisions.router, prefix="/decisions", tags=["decisions"])
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
