@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.db.supabase import supabase
 from app.deps.auth import get_current_user
-from app.schemas.option import OptionCreate
+from app.schemas.options import OptionCreate
 
 router = APIRouter(prefix="/options", tags=["Options"])
 
