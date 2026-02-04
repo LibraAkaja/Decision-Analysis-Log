@@ -1,51 +1,164 @@
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
-*{
-    padding: 0;
+/* -------------------- Reset -------------------- */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Suitable for first feature branch */
-/* body{
-    background: linear-gradient(135deg, #1E293B, #334155, #312E81);
+/* -------------------- Body -------------------- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     width: 100vw;
-    display: flex;
-    place-items: center;
-    border: 2px solid green;
-    overflow-x: hidden;
-} */
-
-body{
-    /* border: 2px solid green; */
-    display: flex;
-    place-content: center;
-    /* background-color: #000000; */
-    background: url(../assets/bgb.png) center no-repeat;
-    background-size: cover;
-    backdrop-filter: brightness(0.25);
+    background: url(../assets/bgb.png) center / cover no-repeat;
+    backdrop-filter: brightness(0.3);
+    color: #f5f5f5;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
-#root{
-    width: 100vw;
+/* -------------------- Root -------------------- */
+#root {
+    width: 100%;
+    max-width: 700px;
     min-height: 100vh;
     display: flex;
-    place-items: center;
-    /* border: 2px solid lightsalmon; */
-    overflow-x: hidden;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* -------------------- Typography -------------------- */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+/* -------------------- Sections -------------------- */
+section {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* -------------------- Inputs & Textareas -------------------- */
+input, textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    backdrop-filter: blur(5px);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+input:focus, textarea:focus {
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.02);
+}
+
+/* -------------------- Buttons -------------------- */
+button {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0.3rem;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+button:hover {
+    background: rgba(255,255,255,0.35);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* -------------------- Lists -------------------- */
+ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+li {
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+li:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* -------------------- Decision Items -------------------- */
+.decision-item {
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.decision-item:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.25rem;
+    }
+    section {
+        padding: 1rem;
+    }
+    input, textarea {
+        font-size: 0.95rem;
+    }
+    button {
+        font-size: 0.95rem;
+        padding: 0.45rem 0.9rem;
+    }
 }

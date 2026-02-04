@@ -17,21 +17,26 @@ api.interceptors.request.use(
 );
 
 //User info fetch
-export const fetchUsers = () => 
-    api.get("/accounts/user");
+export const fetchUsers = () => api.get("/accounts/user");
 
-export const fetchUsersById = (id) => 
-    api.get(`/accounts/user/${id}`);
+export const fetchUsersById = (id) => api.get(`/accounts/user/${id}`);
 
 //User registration info post and login
-export const UserLogin = (data) =>
-    api.post("/accounts/user/login",data);
+export const UserLogin = (data) => api.post("/accounts/user/login",data);
 
-export const UserRegister = (data) => 
-    api.post("/accounts/user/register",data);
+export const UserRegister = (data) => api.post("/accounts/user/register",data);
 
 //Admin login
-export const adminLogin = (data) => 
-    api.post("/accounts/admin/login",data);
+export const adminLogin = (data) => api.post("/accounts/admin/login",data);
+
+//Decision api
+export const fetchDecisions = () => api.get("/decisions");
+export const createDecision = (data) => api.post("/decisions", data);
+export const deleteDecision = (id) => api.delete(`/decisions/${id}`);
+
+//Options api
+export const fetchOptions = (decisionId) => api.get(`/options/${decisionId}`);
+export const addOption = (data) => api.post("/options",data);
+export const deleteOption = (id) => api.delete(`/options/${id}`);
 
 export default api;
