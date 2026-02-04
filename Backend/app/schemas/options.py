@@ -5,6 +5,5 @@ class OptionCreate(BaseModel):
     decision_id: UUID
     option_text: str
 
-class OptionOut(BaseModel):
+class OptionResponse(OptionCreate):
     id: UUID
-    option_text: str
