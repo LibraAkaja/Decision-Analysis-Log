@@ -5,7 +5,7 @@ import {
   deleteDecision as deleteDecisionAPI,
   fetchOptions as fetchOptionsAPI,
   addOption as addOptionAPI,
-  deleteOption as deleteOptionAPI,
+  // deleteOption as deleteOptionAPI,
 } from "./api/client";
 import "./style/Root.css";
 
@@ -75,14 +75,14 @@ function App() {
     }
   };
 
-  const deleteOption = async (id) => {
-    try {
-      await deleteOptionAPI(id);
-      fetchOptions(selectedDecision.id);
-    } catch (err) {
-      console.error("Failed to delete option", err);
-    }
-  };
+  // const deleteOption = async (id) => {
+  //   try {
+  //     await deleteOptionAPI(id);
+  //     fetchOptions(selectedDecision.id);
+  //   } catch (err) {
+  //     console.error("Failed to delete option", err);
+  //   }
+  // };
 
   /* -------------------- Effects -------------------- */
   useEffect(() => {
@@ -163,12 +163,12 @@ function App() {
               {options.map((opt) => (
                 <li key={opt.id} style={{ display: "flex", justifyContent: "space-between" }}>
                   {opt.option_text}
-                  <button
+                  {/* <button
                     style={{ background: "red", color: "#fff", border: "none", padding: "0.1rem 0.5rem" }}
                     onClick={() => deleteOption(opt.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </li>
               ))}
             </ul>
