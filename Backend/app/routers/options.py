@@ -1,73 +1,82 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-
-from app.database import get_db
-from app.dependencies import get_current_user
-from app.models.option import DecisionOption
-from app.models.decision import Decision
-from app.schemas.option import OptionCreate, OptionResponse
+from app.db.supabase import supabase
+from app.deps.auth import get_current_user
+from app.schemas.option import OptionCreate
 
 router = APIRouter(prefix="/options", tags=["Options"])
 
 
-@router.post("/", response_model=OptionResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def add_option(
     data: OptionCreate,
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
+    user_id: str = Depends(get_current_user),
 ):
-    # Ensure decision belongs to current user
-    decision = (
-        db.query(Decision)
-        .filter(
-            Decision.id == data.decision_id,
-            Decision.user_id == user.id,
-        )
-        .first()
+    # 1️⃣ Ensure decision belongs to current user
+    decision_response = (
+        supabase
+        .table("decisions")
+        .select("id")
+        .eq("id", str(data.decision_id))
+        .eq("owner_id", user_id)
+        .single()
+        .execute()
     )
 
-    if not decision:
+    if not decision_response.data:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Decision not found",
         )
 
-    option = DecisionOption(
-        decision_id=data.decision_id,
-        option_text=data.option_text,
+    # 2️⃣ Insert option
+    option_response = (
+        supabase
+        .table("decision_options")
+        .insert({
+            "decision_id": str(data.decision_id),
+            "option_text": data.option_text,
+        })
+        .execute()
     )
 
-    db.add(option)
-    db.commit()
-    db.refresh(option)
+    if not option_response.data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to create option",
+        )
 
-    return option
+    return option_response.data[0]
 
 
-@router.get("/{decision_id}", response_model=list[OptionResponse])
+@router.get("/{decision_id}")
 def get_options(
     decision_id: str,
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
+    user_id: str = Depends(get_current_user),
 ):
-    # Ownership check
-    decision = (
-        db.query(Decision)
-        .filter(
-            Decision.id == decision_id,
-            Decision.user_id == user.id,
-        )
-        .first()
+    # 1️⃣ Ownership check
+    decision_response = (
+        supabase
+        .table("decisions")
+        .select("id")
+        .eq("id", decision_id)
+        .eq("owner_id", user_id)
+        .single()
+        .execute()
     )
 
-    if not decision:
+    if not decision_response.data:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Decision not found",
         )
 
-    return (
-        db.query(DecisionOption)
-        .filter(DecisionOption.decision_id == decision_id)
-        .all()
+    # 2️⃣ Fetch options
+    options_response = (
+        supabase
+        .table("decision_options")
+        .select("*")
+        .eq("decision_id", decision_id)
+        .execute()
     )
+
+    return options_response.data

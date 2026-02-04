@@ -1,69 +1,67 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-
-from app.database import get_db
-from app.dependencies import get_current_user
-from app.models.decision import Decision
-from app.schemas.decision import DecisionCreate, DecisionResponse
+from app.db.supabase import supabase
+from app.deps.auth import get_current_user
+from app.schemas.decision import DecisionCreate
 
 router = APIRouter(prefix="/decisions", tags=["Decisions"])
 
 
-@router.post("/", response_model=DecisionResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_decision(
     data: DecisionCreate,
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
+    user_id: str = Depends(get_current_user),
 ):
-    decision = Decision(
-        user_id=user.id,
-        title=data.title,
-        context=data.context,
-        domain=data.domain,
-        confidence_level=data.confidence_level,
-        decision_date=data.decision_date,
-        status=data.status,
+    response = (
+        supabase
+        .table("decisions")
+        .insert({
+            "title": data.title,
+            "description": data.description,
+            "owner_id": user_id,
+        })
+        .execute()
     )
 
-    db.add(decision)
-    db.commit()
-    db.refresh(decision)
+    if not response.data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to create decision",
+        )
 
-    return decision
+    return response.data[0]
 
 
-@router.get("/", response_model=list[DecisionResponse])
+@router.get("/")
 def get_my_decisions(
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
+    user_id: str = Depends(get_current_user),
 ):
-    return (
-        db.query(Decision)
-        .filter(Decision.user_id == user.id)
-        .all()
+    response = (
+        supabase
+        .table("decisions")
+        .select("*")
+        .eq("owner_id", user_id)
+        .execute()
     )
+
+    return response.data
 
 
 @router.delete("/{decision_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_decision(
     decision_id: str,
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
+    user_id: str = Depends(get_current_user),
 ):
-    decision = (
-        db.query(Decision)
-        .filter(
-            Decision.id == decision_id,
-            Decision.user_id == user.id,
-        )
-        .first()
+    response = (
+        supabase
+        .table("decisions")
+        .delete()
+        .eq("id", decision_id)
+        .eq("owner_id", user_id)
+        .execute()
     )
 
-    if not decision:
+    if not response.data:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Decision not found",
         )
-
-    db.delete(decision)
-    db.commit()
