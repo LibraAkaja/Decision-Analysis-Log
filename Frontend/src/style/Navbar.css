@@ -1,0 +1,234 @@
+nav{
+    width: 90vw;
+    padding: 4px;
+    border: 2px solid #444444;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 4px;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+    /* background: rgba(128, 128, 128, 0.26); */
+    background: #000000;
+    position: fixed;
+    top: 25px;
+    z-index: 4;
+}
+
+nav:hover{
+    /* background: #333333; */
+    background: #111111;
+}
+
+.nav-menu{
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 17px;
+}
+
+.navItem{
+    color: white;
+    padding: 0px 8px 0px 8px;
+    min-width: 11ch;
+    height: 40px;
+    border: 2px solid #666666;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: content-box;
+    cursor: pointer;
+}
+
+.nav-logo-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+}
+
+h1{
+    font-size: x-large;
+    background: linear-gradient(to right, white, grey, brown);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: default;
+}
+
+.siteLogo{
+    width: 40px;
+    aspect-ratio: 1;
+    background: url(../assets/cs.png) center center no-repeat;
+    background-size: cover;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.siteLogo:hover{
+    border: 2px solid white ;
+}
+
+h1:hover{
+    background: linear-gradient(to right, skyblue, crimson);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav.scrolled{
+    background: #333333;
+}
+
+.handheld-menu{
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.handheld-menu.open{
+    max-height: fit-content;
+}
+
+.desktop-menu{
+    display: none;
+}
+
+.hamburger{
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 375px){
+    .nav-menu{
+        flex-direction: row;
+    }
+}
+
+@media only screen and (min-width:647px){
+    nav{
+        width: 80vw;
+        justify-content: space-around;
+    }
+    .nav-menu{
+        width: 80%;
+        place-self: center;
+        justify-content: space-around;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    nav{
+        width: 90vw;
+        padding: 13px;
+        justify-content: space-between;
+        row-gap: 13px;
+    }
+    .siteLogo{
+        width: 50px;
+    }
+    .hamburger{
+        width: 40px;
+    }
+    .nav-menu{
+        width: auto;
+        padding: 0px;
+        gap: 13px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .navItem{
+        border: none;
+    }
+    .navItem span{
+        font-size: large;
+        min-width: 11ch;
+        padding: 0px 13px 0px 13px;
+        height: 40px;
+        border-radius: 0.75rem;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #888888;
+        background: linear-gradient(to right, white, grey, brown);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .navItem span:hover{
+        background: linear-gradient(to right, skyblue, crimson);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .navItem:hover{
+        background-color: #222222;
+    }
+}
+
+@media only screen and (min-width: 1024px){
+    nav{
+        justify-content: space-around;
+        padding: 13px 0px 13px 0px;
+        border-radius: 1rem 0.26rem 1rem 0.26rem;
+    }
+    h1{
+        display: block !important;
+    }
+    .nav-logo-section{
+        width: 24%;
+        column-gap: 15px;
+    }
+    .nav-menu{
+        display: flex;
+        gap: 17px;
+    }
+    .navItem:nth-of-type(2), .navItem:nth-of-type(5){
+        display: none;
+    }
+    .hamburger{
+        display: none;
+    }
+    .desktop-menu{
+        display: block;
+    }
+    .handheld-menu{
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1252px){
+    nav{
+        padding: 25px 0px 25px 0px;
+        justify-content: space-around;
+    }
+    .nav-menu{
+        padding: 0px 25px 0px 25px;
+    }
+    .nav-logo-section{
+        width: 17%;
+    }
+    .navItem:nth-of-type(2), .navItem:nth-of-type(5){
+        display: block;
+    }
+    .navItem{
+        padding: 4px;
+    }
+    h1{
+        font-size: xx-large;
+    }
+    .navItem span{
+        letter-spacing: 1px;
+    }
+    .nav-menu{
+        gap: 25px;
+    }
+}
