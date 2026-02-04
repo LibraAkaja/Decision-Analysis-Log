@@ -3,7 +3,7 @@ from app.db.supabase import supabase
 from app.deps.auth import get_current_user
 from app.schemas.decision import DecisionCreate
 
-router = APIRouter(prefix="/decisions", tags=["Decisions"])
+router = APIRouter(prefix="/decisions", tags=["decisions"])
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)

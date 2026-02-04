@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Base axios instance
 const api = axios.create({
-    baseURL: 'https://decision-analyzer-log-backend.onrender.com/api/v1', //Backend url
+    baseURL: 'https://decision-analyzer-log-backend.onrender.com/api/v1/', //Backend url
 });
 
 api.interceptors.request.use(

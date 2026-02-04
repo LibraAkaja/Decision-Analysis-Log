@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from app.routers import decisions, options
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Decision API")
-
-from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost:5173"
@@ -16,8 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(decisions.router)
-app.include_router(options.router)
+app.include_router(decisions.router, prefix="/api/v1")
+app.include_router(options.router, prefix="/api/v1")
 
 @app.get("/")
 def health_check():
