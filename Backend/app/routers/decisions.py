@@ -13,6 +13,9 @@ def create_decision(
 ):
     """Create a new decision"""
     try:
+        print(f"Creating decision for user: {user_id}")
+        print(f"Decision data: {data}")
+        
         response = (
             supabase
             .table("decisions")
@@ -26,16 +29,20 @@ def create_decision(
         )
 
         if not response.data:
+            print(f"No data returned from insert: {response}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Failed to create decision",
             )
 
         return response.data[0]
+    except HTTPException:
+        raise
     except Exception as e:
+        print(f"Decision creation error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e),
+            detail=f"Failed to create decision: {str(e)}",
         )
 
 
