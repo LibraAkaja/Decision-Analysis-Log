@@ -25,7 +25,8 @@ body {
     align-items: center;
     min-height: 100vh;
     width: 100vw;
-    background: url(../assets/bgb.png) center / cover no-repeat;
+    /* background: url(../assets/bgb.png) center / cover no-repeat; */
+    background: linear-gradient(135deg, #0b0d17 0%, #1a1f3a 100%);
     backdrop-filter: brightness(0.3);
     color: var(--text-color);
     overflow-x: hidden;

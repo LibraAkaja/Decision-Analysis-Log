@@ -54,6 +54,18 @@ nav:hover{
     column-gap: 8px;
 }
 
+.nav-logo {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(56, 189, 248, 0.2));
+    transition: all 0.3s ease;
+}
+
+.nav-logo:hover {
+    filter: drop-shadow(0 4px 8px rgba(56, 189, 248, 0.4));
+    transform: scale(1.05);
+}
+
 h1{
     font-size: x-large;
     background: linear-gradient(to right, white, grey, brown);
@@ -61,19 +73,6 @@ h1{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     cursor: default;
-}
-
-.siteLogo{
-    width: 40px;
-    aspect-ratio: 1;
-    background: url(../assets/cs.png) center center no-repeat;
-    background-size: cover;
-    border: 2px solid black;
-    border-radius: 50%;
-}
-
-.siteLogo:hover{
-    border: 2px solid white ;
 }
 
 h1:hover{

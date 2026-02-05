@@ -21,6 +21,23 @@
     box-shadow: 0 8px 20px var(--shadow);
 }
 
+.hero-logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 8px rgba(56, 189, 248, 0.2));
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;

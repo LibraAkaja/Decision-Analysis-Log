@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import '../style/Home.css';
+import logo from '../assets/decision_analyzer_transparent.png';
 
 const Home = () => {
     const { user } = useAuth();
@@ -8,6 +9,7 @@ const Home = () => {
     return (
         <main className="home-container">
             <section className="hero">
+                <img src={logo} alt="Decision Analyzer Logo" className="hero-logo" />
                 <h1>Decision Analyzer</h1>
                 <p className="tagline">Make better decisions with structured analysis</p>
                 <p className="description">

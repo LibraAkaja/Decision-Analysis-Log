@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
+import "../style/Layouts.css";
 
 const AuthLayout = () => {
     return(
-        <main className="auth-layout" style={{display:'flex', justifyContent:'space-evenly', alignItems:'center', width:'100%', flexWrap:'wrap'}}>
+        <main className="auth-layout">
             <Outlet/>
         </main>
     );
 };
-// , border:'2px solid yellow'
+
 export default AuthLayout;
