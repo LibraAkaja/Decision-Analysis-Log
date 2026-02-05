@@ -16,7 +16,6 @@ Decision Analyzer helps users organize their thoughts, evaluate options with rat
 - **Admin Dashboard** - User management, role promotion, platform statistics
 - **Role-Based Access** - User and admin roles with different permissions
 - **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
-- **Dark Theme** - Modern glassmorphic UI with smooth animations
 
 ##  Tech Stack
 
@@ -40,7 +39,7 @@ Decision Analyzer helps users organize their thoughts, evaluate options with rat
 
 ```Bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/LibraAkaja/Decision-Analysis-Log.git
 cd Frontend
 
 # Install dependencies
@@ -68,51 +67,6 @@ npm run dev
 
 # Visit http://localhost:5173
 ```
-
-##  Project Structure
-src/
- App.jsx                          # Root component
- main.jsx                         # Entry point
- api/
-    client.js                    # Axios API client with interceptors
-    supabaseClient.js            # Supabase configuration
- context/
-    AuthContext.jsx              # Authentication state management
- routes/
-    AppRoutes.jsx                # Route definitions
-    ProtectedRoute.jsx           # Route protection wrapper
- pages/
-    Home.jsx                     # Landing page
-    NotFound.jsx                 # 404 page
-    auth/
-       Login.jsx                # Login form
-       Register.jsx             # Registration form
-       style/Auth.css           # Auth styling
-    dashboard/
-       UserDashboard.jsx        # User decision management
-       admin/
-          AdminDashboard.jsx   # Admin panel
-       style/Dashboard.css      # Dashboard styling
-    style/
-        Home.css
-        NotFound.css
-        Admin.css
- layouts/
-    PublicLayout.jsx             # Public pages layout
-    AuthLayout.jsx               # Auth pages layout
-    UserLayout.jsx               # User pages layout
-    AdminLayout.jsx              # Admin pages layout
- components/
-    Navbar/NavBar.jsx            # Navigation component
-    Footer/Footer.jsx            # Footer component
-    sidebar.jsx                  # Admin sidebar
- style/
-     Root.css                     # Global styles & theme variables
-     Home.css
-     Navbar.css
-     Footer.css
-     Sidebar.css
-
 
 ### API Endpoints
 
@@ -173,7 +127,7 @@ src/
 2. **Connect to Vercel**
    - Go to https://vercel.com
    - Import the repository
-   - Set environment variable: \VITE_API_URL=https://decision-analyzer-log-backend.onrender.com/api/v1\
+   - Set environment variable: `VITE_API_URL=https://decision-analyzer-log-backend.onrender.com/api/v1`
    - Deploy
 
 3. **Verify Deployment**
@@ -195,4 +149,4 @@ This project is part of the Decision Analyzer Log suite.
 
 ##  Support
 
-For issues or questions, contact the LibraAkaja or open an issue on GitHub.
+For issues or questions, contact LibraAkaja or open an issue on GitHub.
