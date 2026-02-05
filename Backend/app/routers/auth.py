@@ -46,6 +46,13 @@ def register(data: UserRegister):
                 detail="Failed to register user",
             )
 
+        # Check if session exists (may be None if email confirmation is required)
+        if not response.session:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email confirmation required. Please check your email to verify your account.",
+            )
+
         # Create user record with default 'user' role
         try:
             supabase.table("users").insert({
