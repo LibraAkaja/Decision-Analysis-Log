@@ -1,14 +1,20 @@
 import axios from 'axios';
 
-// Base axios instance
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+
+// Create axios instance
 const api = axios.create({
-    baseURL: 'https://decision-analyzer-log-backend.onrender.com/api/v1', //Backend url
+    baseURL: API_BASE_URL,
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
+// Add token to requests
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("token");
-        if(token){
+        const token = localStorage.getItem("accessToken");
+        if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
@@ -16,27 +22,60 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-//User info fetch
-// export const fetchUsers = () => api.get("/accounts/user");
+// AUTH ENDPOINTS
 
-// export const fetchUsersById = (id) => api.get(`/accounts/user/${id}`);
+export const registerUser = (data) => api.post("/auth/register", data);
 
-//User registration info post and login
-// export const UserLogin = (data) => api.post("/accounts/user/login",data);
+export const loginUser = (data) => api.post("/auth/login", data);
 
-// export const UserRegister = (data) => api.post("/accounts/user/register",data);
+export const refreshToken = (refresh_token) => 
+    api.post("/auth/refresh", { refresh_token });
 
-//Admin login
-// export const adminLogin = (data) => api.post("/accounts/admin/login",data);
+export const getCurrentUser = () => api.get("/auth/me");
 
-//Decision api
+export const logoutUser = () => api.post("/auth/logout");
+
+// DECISIONS ENDPOINTS
+
 export const fetchDecisions = () => api.get("/decisions");
-export const createDecision = (data) => api.post("/decisions", data);
-export const deleteDecision = (id) => api.delete(`/decisions/${id}`);
 
-//Options api
-export const fetchOptions = (decisionId) => api.get(`/options/${decisionId}`);
-export const addOption = (data) => api.post("/options",data);
-// export const deleteOption = (id) => api.delete(`/options/${id}`);
+export const getDecisionById = (decisionId) => 
+    api.get(`/decisions/${decisionId}`);
+
+export const createDecision = (data) => 
+    api.post("/decisions", data);
+
+export const updateDecision = (decisionId, data) => 
+    api.patch(`/decisions/${decisionId}`, data);
+
+export const deleteDecision = (decisionId) => 
+    api.delete(`/decisions/${decisionId}`);
+
+// OPTIONS ENDPOINTS
+
+export const addOption = (data) => 
+    api.post("/options", data);
+
+export const getOptions = (decisionId) => 
+    api.get(`/options/${decisionId}`);
+
+export const updateOption = (optionId, data) => 
+    api.patch(`/options/${optionId}`, data);
+
+export const deleteOption = (optionId) => 
+    api.delete(`/options/${optionId}`);
+
+// ADMIN ENDPOINTS
+
+export const getAllUsers = () => api.get("/admin/users");
+
+export const updateUserRole = (userId, data) => 
+    api.patch(`/admin/users/${userId}/role`, data);
+
+export const deleteUser = (userId) => 
+    api.delete(`/admin/users/${userId}`);
+
+export const getAdminDashboard = () => 
+    api.get("/admin/dashboard");
 
 export default api;

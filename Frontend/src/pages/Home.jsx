@@ -1,33 +1,61 @@
 import { Link } from "react-router-dom";
-import BrowseServices from "../components/services/BrowseServices";
-import bg from "./../assets/bgb.png";
-import "../Style/Home.css";
+import { useAuth } from "../context/AuthContext";
+import '../style/Home.css';
 
 const Home = () => {
-    return(
-        <main className="home">
-            {/* <p>Hero Section</p> */}
-            <Hero></Hero>
-            {/* <BrowseServices from="home"/>
-            <p>Get involved section</p>
-            <section className="get-involved" style={{display: 'flex'}}>
-                <div className="be-customer" style={{width:'250px', aspectRatio:'1.5', border:'2px solid red', display:'flex', justifyContent:'center', alignItems: 'center'}}>Become a Customer</div>
-                <div className="be-provider" style={{width:'250px', aspectRatio:'1.5', border:'2px solid red', display:'flex', justifyContent:'center', alignItems: 'center'}}>Become a Provider</div>
+    const { user } = useAuth();
+
+    return (
+        <main className="home-container">
+            <section className="hero">
+                <h1>Decision Analyzer</h1>
+                <p className="tagline">Make better decisions with structured analysis</p>
+                <p className="description">
+                    Organize your thoughts, evaluate options with ratings, and make informed decisions.
+                </p>
+
+                {user ? (
+                    <div className="user-actions">
+                        <Link to="/dashboard" className="btn-primary-link">
+                            Go to Dashboard
+                        </Link>
+                        {user.role === 'admin' && (
+                            <Link to="/admin" className="btn-secondary-link">
+                                Admin Panel
+                            </Link>
+                        )}
+                    </div>
+                ) : (
+                    <div className="auth-actions">
+                        <Link to="/login" className="btn-primary-link">
+                            Login
+                        </Link>
+                        <Link to="/register" className="btn-secondary-link">
+                            Register
+                        </Link>
+                    </div>
+                )}
             </section>
-            <p>User comments and views</p>
-            <h3>See what our users have to say</h3>
-            <p>FAQs</p>
-            <h3>Frequently Asked Questions</h3> */}
+
+            <section className="features">
+                <h2>Features</h2>
+                <div className="features-grid">
+                    <div className="feature-card">
+                        <h3>📄 Create Decisions</h3>
+                        <p>Define decisions with titles and descriptions</p>
+                    </div>
+                    <div className="feature-card">
+                        <h3>⭐ Rate Options</h3>
+                        <p>Evaluate each option with a 1-5 rating system</p>
+                    </div>
+                    <div className="feature-card">
+                        <h3>🔒 Secure & Private</h3>
+                        <p>Your decisions are private and securely stored</p>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 };
 
 export default Home;
-
-const Hero = () => {
-    return(
-        <section className="hero">
-            <h1>Home Section</h1>
-        </section>
-    );
-};

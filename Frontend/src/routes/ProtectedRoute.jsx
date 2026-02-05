@@ -1,19 +1,22 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const ProtectedRoute = ({allowedRoles}) => {
-    const { user } = useAuth();
+const ProtectedRoute = ({ children, requiredRole = null }) => {
+    const { user, loading } = useAuth();
 
-    if(!user || !user.token) {
-        const loginPath = allowedRoles?.includes("admin") ? "/login-admin" : "/login";
-        return <Navigate to={loginPath} replace />
+    if (loading) {
+        return <div className="loading-spinner">Loading...</div>;
     }
 
-    if(allowedRoles && !allowedRoles.includes(user.role)) {
-        return <Navigate to="/" replace />
+    if (!user) {
+        return <Navigate to="/login" replace />;
     }
 
-    return <Outlet/>
+    if (requiredRole && user.role !== requiredRole) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    return children;
 };
 
 export default ProtectedRoute;

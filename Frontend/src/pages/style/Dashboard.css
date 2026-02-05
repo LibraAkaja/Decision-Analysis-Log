@@ -1,0 +1,429 @@
+/* ============================================================================
+   DASHBOARD STYLING
+   ============================================================================ */
+
+.dashboard-container {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-header {
+    background: var(--card-color);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.dashboard-header p {
+    margin: 0.25rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    padding: 2rem;
+    flex: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--primary);
+    color: var(--bg-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+    color: var(--bg-color);
+}
+
+.btn-edit {
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.btn-edit:hover {
+    background: rgba(56, 189, 248, 0.4);
+}
+
+.btn-delete {
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+.btn-logout {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+/* Decisions Panel */
+.decisions-panel {
+    background: var(--card-color);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.panel-header h2 {
+    margin: 0;
+    flex: 1;
+}
+
+.create-form,
+.add-option-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.create-form input,
+.create-form textarea,
+.add-option-form input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: none;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.create-form input:focus,
+.create-form textarea:focus,
+.add-option-form input:focus {
+    outline: none;
+    background: var(--input-focus);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.decisions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.decision-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.decision-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.decision-item.active {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--primary);
+}
+
+.decision-info h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+}
+
+.decision-meta {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.loading,
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Details Panel */
+.details-panel {
+    background: var(--card-color);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+.details-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 1rem;
+}
+
+.details-header h2 {
+    margin: 0;
+}
+
+.decision-description {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.options-section {
+    margin-top: 1.5rem;
+}
+
+.options-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.options-header h3 {
+    margin: 0;
+    flex: 1;
+}
+
+.add-option-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.option-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.option-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.option-content p {
+    margin: 0;
+    flex: 1;
+}
+
+.rating-badge {
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.option-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.edit-form input:focus {
+    outline: none;
+    background: var(--input-focus);
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
+.empty-state-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 400px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.empty-state-large p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .panel-header,
+    .options-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .panel-header button,
+    .options-header button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .dashboard-content {
+        padding: 1rem;
+    }
+
+    .decisions-panel,
+    .details-panel {
+        padding: 1rem;
+    }
+
+    .decision-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .btn-logout {
+        width: 100%;
+    }
+}

@@ -2,7 +2,7 @@ import './../../../Style/Root.css';
 import './../../../Style/Login.css';
 import { useState } from 'react';
 import {useNavigate} from "react-router-dom";
-import { adminLogin } from '../../../api/client';
+import { UserLogin } from '../../../api/client';
 import {useAuth} from "../../../hooks/useAuth";
 
 const LoginAdmin = () => {
@@ -23,7 +23,7 @@ const LoginAdmin = () => {
         e.preventDefault();
         setError("");
         try{
-            const response = await adminLogin(credentials);
+            const response = await UserLogin(credentials);
             login({...response.data, role: "admin"});
             navigate("/admin");
         } catch (err){
