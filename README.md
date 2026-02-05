@@ -1,6 +1,6 @@
 # Decision Analyzer Log
 
-A modern, minimal React frontend for making better decisions through structured analysis and option evaluation.
+A modern, minimal CRUD app for making better decisions through structured analysis and option evaluation.
 
 ##  Overview
 
@@ -38,47 +38,38 @@ Decision Analyzer helps users organize their thoughts, evaluate options with rat
 
 ### Installation
 
-\\\ash
+```Bash
 # Clone the repository
 git clone <repository-url>
 cd Frontend
 
 # Install dependencies
 npm install
-\\\
+```
 
 ### Environment Variables
 
-Create a \.env\ file in the Frontend directory:
+Create a .env file in the Frontend directory:
 
-\\\env
+```env
 VITE_API_URL=https://decision-analyzer-log-backend.onrender.com/api/v1
-\\\
+```
 
 For local development:
-\\\env
+```env
 VITE_API_URL=http://localhost:8000/api/v1
-\\\
+```
 
 ### Running Locally
 
-\\\ash
+```Bash
 # Start development server
 npm run dev
 
 # Visit http://localhost:5173
-\\\
-
-### Build for Production
-
-\\\ash
-npm run build
-npm run preview
-\\\
+```
 
 ##  Project Structure
-
-\\\
 src/
  App.jsx                          # Root component
  main.jsx                         # Entry point
@@ -121,18 +112,7 @@ src/
      Navbar.css
      Footer.css
      Sidebar.css
-\\\
 
-##  Authentication Flow
-
-1. **Register**  User creates account with email/password
-2. **Auto-Login**  New user automatically logged in
-3. **Token Storage**  JWT tokens stored in localStorage
-4. **Dashboard Access**  User redirected to \/dashboard\
-5. **Protected Routes**  Routes check authentication before rendering
-6. **Role Check**  Admin routes verify \
-ole === 'admin'\
-7. **Logout**  Clears tokens and redirects to login
 
 ### API Endpoints
 
@@ -162,56 +142,33 @@ ole === 'admin'\
 - \DELETE /admin/users/{id}\ - Delete user
 - \GET /admin/dashboard\ - Get platform statistics
 
-### Design System
-
-- **Glassmorphism:** Frosted glass cards with backdrop blur
-- **Responsive:** Mobile-first design with breakpoints at 1024px and 768px
-- **Dark Mode:** Complete dark theme with blue accents
-- **Smooth Transitions:** 0.3s ease animations
-
-##  Testing Workflows
-
 ### User Flow
 
-\\\
 1. Visit http://localhost:5173  Home page
 2. Click "Register"  Fill form  Submit
 3. Auto-redirects to /dashboard
 4. Create decision  Add options (1-5 rating)
 5. Edit/delete options and decisions
 6. Click logout  Back to login
-\\\
 
 ### Admin Flow
 
-\\\
 1. Register as regular user
 2. (Backend) Promote user to admin role
 3. Login  Can access /admin
 4. View users, statistics
 5. Promote/demote users
 6. Delete users
-\\\
 
-##  Dependencies
-
-\\\json
-{
-  "react": "^19.2.0",
-  "react-dom": "^19.2.0",
-  "react-router-dom": "^6.20.0",
-  "axios": "^1.7.7"
-}
-\\\
 
 ##  Deployment
 
 ### Deploy to Vercel
 
 1. **Push to GitHub**
-   \\\ash
+```Bash
    git push origin main
-   \\\
+   ```
 
 2. **Connect to Vercel**
    - Go to https://vercel.com
@@ -223,21 +180,6 @@ ole === 'admin'\
    - Frontend: https://decision-analyzer-log.vercel.app
    - Backend: https://decision-analyzer-log-backend.onrender.com/api/v1
 
-##  Troubleshooting
-
-### Issue: "Failed to resolve import 'react-router-dom'"
-**Solution:** Run \
-pm install\
-
-### Issue: CORS errors
-**Solution:** Ensure backend \VITE_API_URL\ in \.env\ is correct
-
-### Issue: Token errors on login
-**Solution:** Check localStorage for \ccessToken\ in DevTools
-
-### Issue: Admin routes showing 404
-**Solution:** Ensure user role is 'admin' in database
-
 ##  Best Practices
 
 - Keep components focused and reusable
@@ -246,22 +188,6 @@ pm install\
 - Handle loading and error states
 - Validate form inputs before submission
 - Use semantic HTML
-
-##  Development Workflow
-
-\\\ash
-# Start dev server with HMR
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-
-# Lint code
-npm run lint
-\\\
 
 ##  License
 
