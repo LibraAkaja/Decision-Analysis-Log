@@ -1,4 +1,4 @@
-# Decision Analyzer Log - Frontend
+# Decision Analyzer Log
 
 A modern, minimal React frontend for making better decisions through structured analysis and option evaluation.
 
