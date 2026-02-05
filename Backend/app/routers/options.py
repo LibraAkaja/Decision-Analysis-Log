@@ -13,7 +13,7 @@ def add_option(
 ):
     """Add a new option to a decision"""
     try:
-        # 1️⃣ Ensure decision belongs to current user
+        # Ensure decision belongs to current user
         decision_response = (
             supabase
             .table("decisions")
@@ -30,14 +30,14 @@ def add_option(
                 detail="Decision not found",
             )
 
-        # 2️⃣ Validate rating if provided
+        # Validate rating if provided
         if data.rating is not None and (data.rating < 1 or data.rating > 5):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Rating must be between 1 and 5",
             )
 
-        # 3️⃣ Insert option
+        # Insert option
         option_response = (
             supabase
             .table("decision_options")
@@ -72,7 +72,7 @@ def get_options(
 ):
     """Get all options for a decision"""
     try:
-        # 1️⃣ Ownership check
+        # Ownership check
         decision_response = (
             supabase
             .table("decisions")
@@ -89,7 +89,7 @@ def get_options(
                 detail="Decision not found",
             )
 
-        # 2️⃣ Fetch options
+        # Fetch options
         options_response = (
             supabase
             .table("decision_options")

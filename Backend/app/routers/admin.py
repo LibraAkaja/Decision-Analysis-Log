@@ -76,7 +76,6 @@ def delete_user(
 ):
     """Delete user and all their data (admin only)"""
     try:
-        # Delete user from auth (this will cascade to users table via ON DELETE CASCADE)
         supabase.auth.admin.delete_user(user_id)
     except HTTPException:
         raise

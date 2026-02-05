@@ -8,7 +8,7 @@ security = HTTPBearer()
 
 
 class CurrentUser(BaseModel):
-    id: str  # Supabase auth.users.id (UUID)
+    id: str
 
 
 def get_current_user(
