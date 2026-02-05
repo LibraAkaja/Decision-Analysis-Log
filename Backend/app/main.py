@@ -22,11 +22,6 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
-@app.options("/{full_path:path}")
-async def preflight_handler(full_path: str):
-    """Handle preflight requests"""
-    return {"status": "ok"}
-
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(decisions.router, prefix="/api/v1")
 app.include_router(options.router, prefix="/api/v1")
