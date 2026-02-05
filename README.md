@@ -71,30 +71,30 @@ npm run dev
 ### API Endpoints
 
 **Authentication:**
-- \POST /auth/register\ - Register new user
-- \POST /auth/login\ - Login user
-- \POST /auth/refresh\ - Refresh token
-- \GET /auth/me\ - Get current user profile
-- \POST /auth/logout\ - Logout user
+- \POST /auth/register` - Register new user`
+- \POST /auth/login` - Login user`
+- \POST /auth/refresh` - Refresh token`
+- \GET /auth/me` - Get current user profile`
+- \POST /auth/logout` - Logout user`
 
 **Decisions:**
-- \GET /decisions\ - Get all user decisions
-- \POST /decisions\ - Create new decision
-- \GET /decisions/{id}\ - Get decision with options
-- \PATCH /decisions/{id}\ - Update decision
-- \DELETE /decisions/{id}\ - Delete decision
+- \GET /decisions` - Get all user decisions`
+- \POST /decisions` - Create new decision`
+- \GET /decisions/{id}` - Get decision with options`
+- \PATCH /decisions/{id}` - Update decision`
+- \DELETE /decisions/{id}` - Delete decision`
 
 **Options:**
-- \POST /options\ - Add option to decision
-- \GET /options/{decision_id}\ - Get options for decision
-- \PATCH /options/{id}\ - Update option
-- \DELETE /options/{id}\ - Delete option
+- \POST /options` - Add option to decision`
+- \GET /options/{decision_id}` - Get options for decision`
+- \PATCH /options/{id}` - Update option`
+- \DELETE /options/{id}` - Delete option`
 
 **Admin:**
-- \GET /admin/users\ - Get all users
-- \PATCH /admin/users/{id}/role\ - Update user role
-- \DELETE /admin/users/{id}\ - Delete user
-- \GET /admin/dashboard\ - Get platform statistics
+- \GET /admin/users` - Get all users`
+- \PATCH /admin/users/{id}/role` - Update user role`
+- \DELETE /admin/users/{id}` - Delete user`
+- \GET /admin/dashboard` - Get platform statistics`
 
 ### User Flow
 
