@@ -71,7 +71,8 @@ export const AuthProvider = ({ children }) => {
             
             return { success: true };
         } catch (err) {
-            const message = err.response?.data?.detail || 'Registration failed';
+            console.error('Register error:', err.response?.data || err.message);
+            const message = err.response?.data?.detail || err.response?.data?.message || 'Registration failed';
             setError(message);
             return { success: false, error: message };
         }
