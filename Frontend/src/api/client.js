@@ -16,10 +16,43 @@ api.interceptors.request.use(
         const token = localStorage.getItem("accessToken");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log("[API] Request with token:", {
+                method: config.method,
+                url: config.url,
+                hasToken: !!token,
+                tokenLength: token.length,
+            });
+        } else {
+            console.log("[API] Request without token:", {
+                method: config.method,
+                url: config.url,
+            });
         }
         return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+        console.error("[API] Request interceptor error:", error);
+        return Promise.reject(error);
+    }
+);
+
+// Add response interceptor for debugging
+api.interceptors.response.use(
+    (response) => {
+        console.log("[API] Response success:", {
+            status: response.status,
+            url: response.config.url,
+        });
+        return response;
+    },
+    (error) => {
+        console.error("[API] Response error:", {
+            status: error.response?.status,
+            url: error.config?.url,
+            message: error.response?.data?.detail || error.message,
+        });
+        return Promise.reject(error);
+    }
 );
 
 // AUTH ENDPOINTS
