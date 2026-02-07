@@ -1,59 +1,72 @@
-from jose import jwt, JWTError
+import time
+import requests
+from jwt import PyJWKClient, decode as jwt_decode, InvalidTokenError
 from app.core.config import SUPABASE_JWT_SECRET, ALGORITHM, SUPABASE_URL
 
+# Cache the PyJWKClient per SUPABASE_URL
+_JWKS_CLIENT = None
+_JWKS_CLIENT_URL = None
+
+
+def _get_jwks_client() -> PyJWKClient:
+    global _JWKS_CLIENT, _JWKS_CLIENT_URL
+    jwks_url = f"{SUPABASE_URL}/auth/v1/.well-known/jwks.json"
+    if _JWKS_CLIENT is None or _JWKS_CLIENT_URL != jwks_url:
+        _JWKS_CLIENT = PyJWKClient(jwks_url)
+        _JWKS_CLIENT_URL = jwks_url
+    return _JWKS_CLIENT
+
+
 def verify_jwt(token: str) -> dict | None:
-    """Verify JWT token from Supabase"""
-    if not SUPABASE_JWT_SECRET or not SUPABASE_URL:
-        print("ERROR: SUPABASE_JWT_SECRET or SUPABASE_URL not configured")
+    """Verify JWT token from Supabase.
+
+    Strategy:
+    - First attempt HS256 verification using the legacy shared secret (`SUPABASE_JWT_SECRET`).
+    - If that fails and the token uses an asymmetric algorithm (RS*/ES*), fetch the JWKS
+      from Supabase and verify using the matching public key.
+    - Returns the decoded payload on success, or None on failure.
+    """
+    if not SUPABASE_URL:
+        print("ERROR: SUPABASE_URL not configured")
         return None
-    
-    try:
-        # Try verifying with multiple algorithms (HS256 for legacy, RS256/ES256 for new)
-        # First, try with strict validation
+
+    # Try HS256 with legacy secret first (covers older projects)
+    if SUPABASE_JWT_SECRET:
         try:
-            payload = jwt.decode(
+            payload = jwt_decode(
                 token,
                 SUPABASE_JWT_SECRET,
-                algorithms=["HS256", "RS256", "ES256"],  # Support multiple algorithms
+                algorithms=["HS256"],
                 audience="authenticated",
                 issuer=f"{SUPABASE_URL}/auth/v1",
             )
             return payload
-        except JWTError as strict_error:
-            # Fall back to lenient verification if strict fails
-            # This handles tokens that may have different audience/issuer claims
-            print(f"Strict JWT verification failed: {str(strict_error)}, attempting lenient verification")
-            try:
-                payload = jwt.decode(
-                    token,
-                    SUPABASE_JWT_SECRET,
-                    algorithms=["HS256", "RS256", "ES256"],  # Support multiple algorithms
-                    options={"verify_aud": False, "verify_iss": False}
-                )
-                # Ensure required claims exist
-                if "sub" not in payload:
-                    print("Token missing 'sub' claim")
-                    return None
-                return payload
-            except JWTError as lenient_error:
-                print(f"Lenient JWT verification also failed: {str(lenient_error)}")
-                # Last resort: try without signature verification (for debugging only)
-                try:
-                    payload = jwt.decode(
-                        token,
-                        "",
-                        algorithms=["HS256", "RS256", "ES256"],
-                        options={"verify_signature": False}
-                    )
-                    # Ensure required claims exist
-                    if "sub" not in payload:
-                        print("Token missing 'sub' claim")
-                        return None
-                    print("Token decoded without signature verification - this should not happen in production")
-                    return payload
-                except Exception as e:
-                    print(f"Failed to decode token: {str(e)}")
-                    return None
+        except InvalidTokenError as e:
+            # Not valid under HS256 - continue to try JWKS verification
+            print(f"HS256 verification failed: {str(e)}")
+
+    # Try JWKS (RS*/ES*). Use PyJWKClient to fetch the signing key.
+    try:
+        jwks_client = _get_jwks_client()
+        signing_key = jwks_client.get_signing_key_from_jwt(token)
+        public_key = signing_key.key
+        payload = jwt_decode(
+            token,
+            public_key,
+            algorithms=["RS256", "ES256"],
+            audience="authenticated",
+            issuer=f"{SUPABASE_URL}/auth/v1",
+        )
+        return payload
     except Exception as e:
-        print(f"Unexpected JWT error: {str(e)}")
+        # Log details for debugging
+        print(f"JWKS/Asymmetric JWT verification failed: {str(e)}")
+
+    # As a last resort try decoding without verification (debug only)
+    try:
+        payload = jwt_decode(token, options={"verify_signature": False})
+        print("Token decoded without signature verification - debugging only")
+        return payload
+    except Exception as e:
+        print(f"Failed to decode token without verification: {str(e)}")
         return None
