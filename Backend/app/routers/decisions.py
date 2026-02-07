@@ -13,8 +13,15 @@ def create_decision(
 ):
     """Create a new decision"""
     try:
-        print(f"Creating decision for user: {user_id}")
-        print(f"Decision data: {data}")
+        print(f"[DECISION] Creating decision for user: {user_id}")
+        print(f"[DECISION] Decision data: {data.dict()}")
+        
+        # Validate user_id is not empty
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User identification missing",
+            )
         
         response = (
             supabase
@@ -29,17 +36,19 @@ def create_decision(
         )
 
         if not response.data:
-            print(f"No data returned from insert: {response}")
+            print(f"[DECISION] No data returned from insert: {response}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Failed to create decision",
             )
 
+        print(f"[DECISION] Successfully created decision: {response.data[0]}")
         return response.data[0]
     except HTTPException:
         raise
     except Exception as e:
-        print(f"Decision creation error: {str(e)}")
+        print(f"[DECISION] Decision creation error: {str(e)}")
+        print(f"[DECISION] Exception type: {type(e).__name__}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Failed to create decision: {str(e)}",

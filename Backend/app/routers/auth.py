@@ -128,10 +128,17 @@ def login(data: UserLogin):
 
 
 @router.post("/refresh")
-def refresh_token(refresh_token: str):
+def refresh_token(data: dict):
     """Refresh access token"""
     try:
-        response = supabase.auth.refresh_session(refresh_token)
+        refresh_token_value = data.get("refresh_token")
+        if not refresh_token_value:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Refresh token not provided",
+            )
+        
+        response = supabase.auth.refresh_session(refresh_token_value)
 
         if not response.session:
             raise HTTPException(
@@ -143,6 +150,8 @@ def refresh_token(refresh_token: str):
             "access_token": response.session.access_token,
             "refresh_token": response.session.refresh_token,
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -191,7 +200,9 @@ def get_current_user_profile(
 def logout(user_id: str = Depends(get_current_user)):
     """Logout user (sign out)"""
     try:
-        supabase.auth.sign_out()
+        # Note: Supabase doesn't require explicit server-side logout for stateless JWT tokens
+        # The client-side removal of the token is sufficient
+        # However, we could implement token blacklisting here if needed in the future
         return {"message": "Successfully logged out"}
     except Exception as e:
         raise HTTPException(
