@@ -59,7 +59,7 @@ def create_decision(
 def get_my_decisions(
     user_id: str = Depends(get_current_user),
 ):
-    """Get all decisions for the current user"""
+    """Get all decisions for the current user with options"""
     try:
         response = (
             supabase
@@ -70,7 +70,21 @@ def get_my_decisions(
             .execute()
         )
 
-        return response.data
+        decisions = response.data if response.data else []
+        
+        # Fetch options for each decision
+        for decision in decisions:
+            options_response = (
+                supabase
+                .table("decision_options")
+                .select("*")
+                .eq("decision_id", decision["id"])
+                .order("created_at", desc=False)
+                .execute()
+            )
+            decision["options"] = options_response.data if options_response.data else []
+
+        return decisions
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
